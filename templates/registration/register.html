@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang=""en">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+
+<body>
+    <div style="padding:23px">
+        <h2>Registration Page</h2>
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <p>the form contains an error</p>
+            {% endif %}
+
+            {{ form }}
+            <br><br>
+
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="profile-pic" name="profile-pic">
+                <label class="custom-file-label" for="profile-pic">Choose file</label>
+            </div>
+            <br><br>
+
+
+            <p><input type="submit" value="Register"></p>
+        </form>
+    </div>
+</body>
+</html>

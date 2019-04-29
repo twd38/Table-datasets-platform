@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static './styles/index.css' %}" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #203864">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+          <!-- <img src="https://i.ibb.co/W2b3tyn/table-logo.png" class="rounded" style="height: 2em; width: 2em;"> -->
+          <img src="https://i.ibb.co/dgQQ08G/table-logo-white.png" class="rounded d-inline-block align-top" style="height: 30px; width: 30px">
+      </a> 
+      <ul class="navbar-nav mr-auto">
+              <form class="form-inline my-2 my-lg-0" action="/searchResults/" method="GET" style="margin-left: 1em;">
+                  <div class="input-group">
+                      <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search" name="query" aria-describedby="button-addon2">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-warning btn-sm" value="Search" id="button-addon2" type="submit">Search</button>
+                          <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+                      </div>
+                  </div>
+              </form>
+          
+          <li class="nav-item ">
+              <a class="nav-link" style="margin-left: 1em" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" style="margin-left: 1em" action="/userPosts/{{ user.id }}" method="GET">Profile <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item ">
+                  <a class="nav-link" style="margin-left: 1em" href="/">Forum <span class="sr-only">(current)</span></a>
+              </li>
+      </ul>
+      {% if user.is_authenticated %}
+      <h7 style="color:white; margin-bottom:0.5em;">{{ user.username }}</h7>
+      <div class="dropdown">
+          <a style="color:white; margin-left: 1em; " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <svg width="2em" height="2em" data-jdenticon-value=`{{ user.username }}` class="img-thumbnail float-right"></svg>
+          </a>          
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/userPosts/{{ user.id }}">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/accounts/logout/">Logout</a>
+          </div>
+      </div>
+  
+      {% else %}
+      <a class="nav-link text-light" href="/accounts/login/">Login</a>
+      {% endif %}
+    </div>
+  </nav>
+
+
+<body class="bg-light">
+    <!-- <div style="padding:23px">
+        <h1>{{ user.username }} - uploaded tables</h1><br><br>
+        {% for post in posts.all %}
+            <div>
+            <strong>Title</strong><br>
+            <a href="{% url 'singleTable' post.id %}">{{ post.title }}</a><br>
+            <strong>Description</strong><br>
+            {{ post.description }} <br>
+            {{post.data_crop_html | safe}}
+            <strong>Tags</strong><br>
+            {{ post.keywords }} <br>
+            <strong>Source</strong><br>
+            {{ post.source }} <br>
+            <a href="/media/{{ post.dataset }}">Download '{{ post.title }}' table</a><br>
+            <form action="/deletePost/{{post.id}}/"
+					style="display: inline;"
+					method="post">{% csrf_token %}
+				<input type="submit" value="Delete"/><br>
+			</form><br><br><br>
+            </div>
+        {% endfor %}
+    </div> -->
+  <div style="padding:5em 23px 0em 23px">
+    <div class="container" style="padding-top: 2em; padding-bottom: 4em">
+      <div class="row">
+          <div class="col">
+              <h4>Profile</h4>
+          </div>
+          <div class="col-6">
+          </div>
+          <div class="col">
+              <!-- <a class="btn btn-primary float-right" href="/createPost/" role="button">Upload Dataset</a> -->
+                <!-- Modal Trigger -->
+              <button type="button" class="btn btn-warning float-right " data-toggle="modal" data-target="#uploadModal" data-whatever="@mdo">Upload Dataset</button>
+          </div>
+      </div>
+      <div class="row" style="margin-bottom:1em">
+          <div class="col">
+              <hr></hr>
+          </div>      
+      </div>
+
+      <div class="row" style="margin: 0em 0em 2em 0em">
+        <div class="card" style="width: 80em;">
+          <div class="card-body" style="padding:0">
+            <div class="row align-items-start" style="padding:0em">
+              <div class="col-sm-4">
+                <img src='https://media.licdn.com/dms/image/C4D03AQE40w06WqtoQg/profile-displayphoto-shrink_800_800/0?e=1560384000&v=beta&t=akvekd0EEBmuWIdgH6yn9wPNvr40JQsw19x5Fiu71lA' style="border-radius: 3px 0px 0px 0px; object-fit: cover; width: 20em; height: 20em">
+                <!-- <svg  data-jdenticon-value=`{{ user.username }}` style="border-radius: 3px 0px 0px 0px; object-fit: cover; width: 20em; height: 20em"></svg> -->
+            </div>
+              <div class="col" style="padding: 2em 3em 0em 0em">
+                  <h3>Henri El Daher</h3>
+                  <p>
+                      I'm an MBA candidate at Cornell Tech with a background in finance and software.
+                    I enjoy sharing my research and insights on the topics of finance, tech and sports. 
+                </p>
+
+              </div>
+            </div>
+
+            <!-- <hr style="margin:0"></hr> -->
+
+            <ul class="nav nav-tabs border-top">
+                <li class="nav-item">
+                  <a href="#" class="nav-link active" style="border-radius: 0px 0px 0px 3px; margin:0;">Your Datasets</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Saved Datasets</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Downloaded</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Recent Post -->
+      
+      
+
+      {% for post in posts.all %}
+      <div class="row" style="margin: 0em 0em 1em 0em">
+          <div class="card" style="width: 80em;">
+              <div class="card-body">
+                  <div class="row" >
+                      <div class="col" style="margin: 1em;">
+                              <div class="float-left">
+                                  <div class="float-right">
+                                      <span style="display: block" ><a href="{% url 'userPosts' post.poster.id %}"><h5 style="color:#373737; text-align: left; margin: 0em 0.5em; ">{{ post.poster }}</h5></a></span>
+                                      <span style="display: block" ><h5 class="text-muted" style="color:#373737; text-align: left; margin: 0em 0.5em;"><small>Posted Today</small></h5></span>
+                                  </div> 
+                                  <svg width="4em" height="4em" data-jdenticon-value=`{{ post.poster }}` class="img-thumbnail float-left"></svg>
+                              </div>
+                              <a href="/media/{{ post.dataset }}">
+                                  <i class="material-icons md-24 float-right" style="margin-left: .5em;"> save_alt </i> 
+                              </a> 
+                      </div>
+                  </div>
+                  <hr></hr>
+                  <div class="row">
+                      <div class="col" style="margin: 1em 1em 0em 1em;">
+                          <a href="{% url 'singleTable' post.id %}"><h3 style="color:#0275D8">{{ post.title }}</h3></a>
+                          <p class="float-left text-muted">{{ post.description }} </p>
+                          <div>
+                              <table class="table table-bordered">
+                                  {{post.data_crop_html | safe}}
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row" >
+                      <div class="col" style="margin: 0em 1em;">
+                          <strong>Tags:</strong>
+                          <a href="{% url 'singleTable' post.id %}">{{ post.keywords }}</a>
+                          <span class="float-right">
+                              <strong">Source:</strong>
+                              {{ post.source }}
+                          </span>
+                          
+                      </div>
+                  </div>
+                  <div class="row float-right" >
+                      <div class="col" style="margin: 0em 1em 1em 1em;">
+                          <form style="margin-top:1em" action="/deletePost/{{post.id}}/" method="post">
+                            {% csrf_token %}
+                            <button type="submit" value="Delete" class="btn btn-outline-danger btn-sm" >Delete</button>
+                          </form>
+                      </div>
+                      
+                  </div>
+                  
+                  
+              </div>
+          </div>  
+      </div>
+      {% endfor %}
+    
+    
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Upload New Dataset</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/addPost/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" name="title">
+                    </div>
+                    <div class="form-group">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea type="text" class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                            <label for="source" class="col-form-label">Source:</label>
+                            <input type="text" class="form-control" name="source">
+                    </div>
+                    <div class="form-group">
+                            <label for="source" class="col-form-label">Keywords:</label>
+                            <input type="text" class="form-control" name="keywords">
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="csv_file" name="csv_file">
+                        <label class="custom-file-label" for="csv_file">Choose file</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" value="Add" class="btn btn-primary">Add File</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <div class="fixed-bottom">
+        <button type="button" style="margin: 0 4em 3em 0; height: 3em; width: 3em;" class="btn btn-warning btn-lg rounded-circle float-right shadow p-3 mb-5 rounded" data-toggle="modal" data-target="#uploadModal" data-whatever="@mdo">
+            <!-- New Dataset -->
+            <i style="color:white;" class="material-icons">
+                add
+            </i>
+        </button>
+    </div>
+
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@2.1.1" async></script>
+  </body>

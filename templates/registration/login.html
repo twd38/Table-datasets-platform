@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang=""en">
+<head>
+    <title>Table Login</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+{#        {% if user.is_authenticated %}#}
+{#        <a class="nav-link" href="/accounts/logout/">Logout</a>#}
+{#        {% else %}#}
+{#        <a class="nav-link" href="/accounts/login/">Login</a>#}
+{#        {% endif %}#}
+{##}
+{#      <li class="nav-item">#}
+{#        <a class="nav-link" href="/accounts/login/">Login</a>#}
+{#      </li>#}
+{#      <li class="nav-item">#}
+{#        <a class="nav-link" href="/accounts/logout/">Logout</a>#}
+{#      </li>#}
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">Search</button>
+    </form>
+  </div>
+</nav>
+
+<body>
+    <div style="padding:23px">
+        <h3>Please sign in below or <a href="/accounts/register/">create an account</a></h3>
+
+        {% if form.errors %}
+        <p>error</p>
+        {% endif %}
+
+        {% if next %}
+        <p>cannot access that page</p>
+        {% endif %}
+
+        <form action="/accounts/login/" method="post">
+            {% csrf_token %}
+
+            <p>Username: {{ form.username }}</p>
+            <p>Password: {{ form.password }}</p>
+
+            <p><input type="submit" value="login"></p>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    </div>
+</body>
+</html>

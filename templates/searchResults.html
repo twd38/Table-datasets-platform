@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang=""en">
+<head>
+    <title>Table Login</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #203864">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+        <!-- <img src="https://i.ibb.co/W2b3tyn/table-logo.png" class="rounded" style="height: 2em; width: 2em;"> -->
+        <img src="https://i.ibb.co/dgQQ08G/table-logo-white.png" class="rounded d-inline-block align-top" style="height: 30px; width: 30px">
+    </a> 
+    <ul class="navbar-nav mr-auto">
+            <form class="form-inline my-2 my-lg-0" action="/searchResults/" method="GET" style="margin-left: 1em;">
+                <div class="input-group">
+                    <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search" name="query" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-warning btn-sm" value="Search" id="button-addon2" type="submit">Search</button>
+                        <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
+                    </div>
+                </div>
+            </form>
+        
+        <li class="nav-item active">
+            <a class="nav-link" style="margin-left: 1em" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" style="margin-left: 1em" href="/userPosts/{{ user.id }}">Profile <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item ">
+                <a class="nav-link" style="margin-left: 1em" href="/">Forum <span class="sr-only">(current)</span></a>
+            </li>
+    </ul>
+    {% if user.is_authenticated %}
+    <h7 style="color:white; margin-bottom:0.5em;">{{ user.username }}</h7>
+    <div class="dropdown">
+        <a style="color:white; margin-left: 1em; " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg width="2em" height="2em" data-jdenticon-value=`{{ user.username }}` class="img-thumbnail float-right"></svg>
+        </a>          
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/userPosts/1">Profile</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/accounts/logout/">Logout</a>
+        </div>
+    </div>
+
+    {% else %}
+    <a class="nav-link" href="/accounts/login/">Login</a>
+    {% endif %}
+  </div>
+</nav>
+
+<body class="bg-light">
+    <div style="padding:5em 23px 0em 23px">
+
+        <!-- <h1>Search Results</h1><br><br>
+        {% for post in filtered_posts %}
+            <div>
+            <strong>Title</strong><br>
+            <a href="{% url 'singleTable' post.id %}">{{ post.title }}</a><br>
+            <strong>Description</strong><br>
+            {{ post.description }} <br>
+            {{post.data_crop_html | safe}}
+            <strong>Tags</strong><br>
+            {{ post.keywords }} <br>
+            <strong>Source</strong><br>
+            {{ post.source }} <br>
+            <a href="/media/{{ post.dataset }}">Download '{{ post.title }}' table</a><br><br><br>
+            </div>
+        {% endfor %} -->
+
+      <div class="container" style="padding-top: 2em">
+          <div class="row">
+              <div class="col">
+                  <h4>Search Results</h4>
+              </div>
+              <div class="col-6">
+              </div>
+              <div class="col">
+                <i class="material-icons float-right" style="margin-left: .5em;"> filter_list </i> 
+              </div>
+          </div>
+          <div class="row" style="margin-bottom:1em">
+              <div class="col">
+                  <hr></hr>
+              </div>      
+          </div>
+
+          {% for post in filtered_posts %}
+          <div class="row" style="margin: 0em 0em 2em 0em">
+              <div class="card" style="width: 80em;">
+                  <div class="card-body">
+                      <div class="row" >
+                          <div class="col" style="margin: 1em;">
+                                  <div class="float-left">
+                                      <div class="float-right">
+                                          <span style="display: block" ><a href="{% url 'userPosts' post.poster.id %}"><h5 style="color:#373737; text-align: left; margin: 0em 0.5em; ">{{ post.poster }}</h5></a></span>
+                                          <span style="display: block" ><h5 class="text-muted" style="color:#373737; text-align: left; margin: 0em 0.5em;"><small>Posted 3 days ago</small></h5></span>
+                                      </div> 
+                                      <svg width="4em" height="4em" data-jdenticon-value=`{{ post.poster }}` class="img-thumbnail float-left"></svg>
+                                  </div>
+                                  <a href="/media/{{ post.dataset }}">
+                                      <i class="material-icons md-24 float-right" style="margin-left: .5em;"> save_alt </i> 
+                                  </a> 
+                          </div>
+                      </div>
+                      <hr></hr>
+                      <div class="row">
+                          <div class="col" style="margin: 1em 1em 0em 1em;">
+                              <a href="{% url 'singleTable' post.id %}"><h3 style="color:#0275D8">{{ post.title }}</h3></a>
+                              <p class="float-left text-muted">{{ post.description }} </p>
+                              <div>
+                                  <table class="table table-bordered">
+                                      {{post.data_crop_html | safe}}
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row" >
+                          <div class="col" style="margin: 0em 1em;">
+                              <strong>Tags:</strong>
+                              <a href="{% url 'singleTable' post.id %}">{{ post.keywords }}</a>
+                              <span class="float-right">
+                                  <strong">Source:</strong>
+                                  {{ post.source }}
+                              </span>
+                              
+                          </div>
+                      </div>
+                  </div>
+              </div>  
+          </div>
+          {% endfor %}
+        </div> 
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@2.1.1" async></script>
+
+</body>

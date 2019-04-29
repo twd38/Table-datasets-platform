@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table Create Post</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+       <form class="form-inline my-2 my-lg-0" action="/searchResults/" method="GET">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<body>
+    <div style="padding:23px">
+        <h3>Add a dataset below (must be 'csv' file)</h3>
+     <form action="/addPost/" method="post" enctype="multipart/form-data">{% csrf_token %}
+         <label for="title">Title</label><br>
+         <input type="text" name="title"/><br><br>
+         <label for="description">Description (optional)</label><br>
+         <input type="text" name="description"/><br>
+         <label for="source">Source (optional)</label><br>
+         <input type="text" name="source"/><br>
+         <label for="keywords">Keywords (optional)</label><br>
+         <input type="text" name="keywords"/><br><br>
+         <input type="file" name="csv_file"/><br><br>
+        <input type="submit" value="Add"/>
+    </form>
+    </div>
+</body>
+</html>
