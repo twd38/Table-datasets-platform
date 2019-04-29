@@ -220,3 +220,5 @@ XlsxWriter==0.9.6
 xlwt==1.2.0
 zict==0.1.2
 zope.interface==4.5.0
+
+Kivy==1.10.1
