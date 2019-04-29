@@ -1,1 +1,1 @@
-web: gunicorn Table-Datasets-Publish.wsgi
+web: gunicorn todo.wsgi
