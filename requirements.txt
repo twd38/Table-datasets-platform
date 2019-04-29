@@ -79,7 +79,7 @@ jupyter-client==5.0.1
 jupyter-console==5.1.0
 jupyter-core==4.3.0
 Keras==2.1.4
-Kivy==1.10.1
+
 Kivy-Garden==0.1.4
 lazy-object-proxy==1.2.2
 llvmlite==0.22.0
