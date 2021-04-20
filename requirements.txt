@@ -61,7 +61,7 @@ pathlib2==2.2.1
 
 pipenv==11.10.4
 
-py==1.4.33
+py==1.10.0
 pyasn1==0.4.3
 pyasn1-modules==0.2.2
 
