@@ -1,7 +1,7 @@
 anaconda-client==1.2.2
 anaconda-project==0.8.2
 
-Babel==2.4.0
+Babel==2.9.1
 
 
 conda==4.3.16
