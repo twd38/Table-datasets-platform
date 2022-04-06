@@ -99,7 +99,7 @@ sympy==1.0
 tables==3.4.2
 
 tweepy==3.6.0
-Twisted==18.7.0
+Twisted==22.2.0
 twython==3.6.0
 
 unicodecsv==0.14.1
