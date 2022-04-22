@@ -76,7 +76,7 @@ PyMySQL==0.8.1
 pyOpenSSL==17.0.0
 pyparsing==2.1.4
 pyPdf==1.13
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pyproj==1.9.5.1
 pyshp==1.2.12
 PySocks==1.6.8
